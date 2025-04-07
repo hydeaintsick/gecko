@@ -1,38 +1,38 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { ArrowLeft, Leaf, Mail, Lock, Eye, EyeOff, User } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useRouter } from "next/navigation"
+import { useState } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowLeft, Leaf, Mail, Lock, Eye, EyeOff, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
+  const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setIsLoading(true)
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    setIsLoading(true);
 
     // Simulate signup - in a real app, this would be an API call
     setTimeout(() => {
-      setIsLoading(false)
-      router.push("/")
-    }, 1500)
-  }
+      setIsLoading(false);
+      router.push("/");
+    }, 1500);
+  };
 
   return (
     <div className="container max-w-md mx-auto px-4 py-8 min-h-screen flex flex-col">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }} 
-        animate={{ opacity: 1, y: 0 }} 
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="flex-1 flex flex-col"
       >
@@ -47,14 +47,14 @@ export default function SignupPage() {
 
         <div className="mb-8 flex justify-center">
           <motion.div
-            animate={{ 
+            animate={{
               rotate: [0, 10, 0, -10, 0],
-              scale: [1, 1.1, 1, 1.1, 1]
+              scale: [1, 1.1, 1, 1.1, 1],
             }}
-            transition={{ 
-              duration: 5, 
+            transition={{
+              duration: 5,
               repeat: Number.POSITIVE_INFINITY,
-              repeatType: "reverse" 
+              repeatType: "reverse",
             }}
             className="relative"
           >
@@ -62,15 +62,15 @@ export default function SignupPage() {
               <Leaf className="h-10 w-10 text-green-500" />
             </div>
             <motion.div
-              animate={{ 
+              animate={{
                 y: [0, -5, 0],
-                opacity: [0, 1, 0]
+                opacity: [0, 1, 0],
               }}
-              transition={{ 
-                duration: 2, 
+              transition={{
+                duration: 2,
                 repeat: Number.POSITIVE_INFINITY,
                 repeatType: "reverse",
-                delay: 1
+                delay: 1,
               }}
               className="absolute -top-6 right-0"
             >
@@ -107,10 +107,6 @@ export default function SignupPage() {
                 className="pl-10"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -153,7 +149,11 @@ export default function SignupPage() {
             {isLoading ? (
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                transition={{
+                  duration: 1,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "linear",
+                }}
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24">
                   <circle
@@ -183,13 +183,15 @@ export default function SignupPage() {
         <div className="mt-8 text-center">
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
-            <Link href="/login" className="text-green-500 hover:text-green-600 font-medium">
+            <Link
+              href="/login"
+              className="text-green-500 hover:text-green-600 font-medium"
+            >
               Log In
             </Link>
           </p>
         </div>
       </motion.div>
-  </div>
-  )
+    </div>
+  );
 }
-
