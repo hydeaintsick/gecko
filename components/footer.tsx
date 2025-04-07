@@ -12,7 +12,7 @@ export default function Footer() {
 
   const handleLogout = () => {
     // In a real app, this would clear authentication state
-    router.push("/landing");
+    router.push("/");
   };
 
   return (

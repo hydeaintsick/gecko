@@ -37,7 +37,7 @@ export default function SignupPage() {
         className="flex-1 flex flex-col"
       >
         <header className="flex items-center mb-8">
-          <Link href="/landing">
+          <Link href="/">
             <Button variant="ghost" size="icon" className="mr-2">
               <ArrowLeft className="h-5 w-5" />
             </Button>
