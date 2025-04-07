@@ -1,54 +1,72 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useRouter, useParams } from "next/navigation"
-import { motion } from "framer-motion"
-import { ArrowLeft, Droplets, Sun, Edit } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import Image from "next/image"
-import { usePlantStore } from "@/lib/store"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Butterfly } from "@/components/butterfly"
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
+import { motion } from "framer-motion";
+import { ArrowLeft, Droplets, Sun, Edit } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
+import { usePlantStore } from "@/lib/store";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Butterfly } from "@/components/butterfly";
 
 export default function PlantDetailsPage() {
-  const router = useRouter()
-  const params = useParams()
-  const id = params.id as string
-  const { plants } = usePlantStore()
-  const [plant, setPlant] = useState(null)
-  const [isWatering, setIsWatering] = useState(false)
-  const [isRotating, setIsRotating] = useState(false)
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+  const { plants } = usePlantStore();
+  const [plant, setPlant] = useState<any>(null);
+  const [isWatering, setIsWatering] = useState(false);
+  const [isRotating, setIsRotating] = useState(false);
 
   useEffect(() => {
-    const foundPlant = plants.find((p) => p.id === id)
+    const foundPlant = plants.find((p) => p.id === id);
     if (foundPlant) {
-      setPlant(foundPlant)
+      setPlant(foundPlant);
     } else {
-      router.push("/")
+      router.push("/app");
     }
-  }, [id, plants, router])
+  }, [id, plants, router]);
 
   const handleWater = () => {
-    setIsWatering(true)
-    setTimeout(() => setIsWatering(false), 1500)
-  }
+    setIsWatering(true);
+    setTimeout(() => setIsWatering(false), 1500);
+  };
 
   const handleRotate = () => {
-    setIsRotating(true)
-    setTimeout(() => setIsRotating(false), 1500)
-  }
+    setIsRotating(true);
+    setTimeout(() => setIsRotating(false), 1500);
+  };
 
-  if (!plant) return null
+  if (!plant) return null;
 
   return (
     <div className="container max-w-md mx-auto px-4 py-8 relative">
       {/* Add butterflies to the details page */}
-      <Butterfly size={20} color="#F472B6" top="15%" right="10%" delay={1} duration={12} />
-      <Butterfly size={16} color="#34D399" top="40%" left="5%" delay={3} duration={10} />
+      <Butterfly
+        size={20}
+        color="#F472B6"
+        top="15%"
+        right="10%"
+        delay={1}
+        duration={12}
+      />
+      <Butterfly
+        size={16}
+        color="#34D399"
+        top="40%"
+        left="5%"
+        delay={3}
+        duration={10}
+      />
 
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <header className="flex items-center mb-6">
           <Link href="/">
             <Button variant="ghost" size="icon" className="mr-2">
@@ -85,7 +103,11 @@ export default function PlantDetailsPage() {
                   animate={{ opacity: [0, 1, 0] }}
                   transition={{ duration: 1.5, times: [0, 0.5, 1] }}
                 >
-                  <motion.div animate={{ y: [0, 100] }} transition={{ duration: 1.5, ease: "easeIn" }} className="flex">
+                  <motion.div
+                    animate={{ y: [0, 100] }}
+                    transition={{ duration: 1.5, ease: "easeIn" }}
+                    className="flex"
+                  >
                     {[...Array(5)].map((_, i) => (
                       <motion.span
                         key={i}
@@ -106,7 +128,11 @@ export default function PlantDetailsPage() {
             </motion.div>
 
             <Link href={`/edit/${plant.id}`} className="absolute top-3 right-3">
-              <Button variant="ghost" size="icon" className="rounded-full bg-white/80 backdrop-blur-sm">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full bg-white/80 backdrop-blur-sm"
+              >
                 <Edit className="h-4 w-4" />
               </Button>
             </Link>
@@ -116,13 +142,20 @@ export default function PlantDetailsPage() {
             <div className="mb-4">
               {plant.customName && (
                 <div className="flex items-center mb-1">
-                  <h2 className="text-xl font-medium mr-2">{plant.customName}</h2>
-                  <Badge variant="outline" className="bg-green-50 text-green-600 border-green-200">
+                  <h2 className="text-xl font-medium mr-2">
+                    {plant.customName}
+                  </h2>
+                  <Badge
+                    variant="outline"
+                    className="bg-green-50 text-green-600 border-green-200"
+                  >
                     🌱 Plant
                   </Badge>
                 </div>
               )}
-              <p className="text-sm text-muted-foreground italic">{plant.latinName}</p>
+              <p className="text-sm text-muted-foreground italic">
+                {plant.latinName}
+              </p>
             </div>
 
             {plant.notes && (
@@ -155,11 +188,11 @@ export default function PlantDetailsPage() {
         <div className="space-y-2">
           <h3 className="text-lg font-medium">Care History</h3>
           <p className="text-sm text-muted-foreground">
-            Coming soon! Track your plant's watering, fertilizing, and care history.
+            Coming soon! Track your plant's watering, fertilizing, and care
+            history.
           </p>
         </div>
       </motion.div>
     </div>
-  )
+  );
 }
-

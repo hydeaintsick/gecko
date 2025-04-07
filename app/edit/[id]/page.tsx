@@ -1,40 +1,44 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useRouter, useParams } from "next/navigation"
-import { motion } from "framer-motion"
-import { ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import PlantForm from "@/components/plant-form"
-import { usePlantStore } from "@/lib/store"
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
+import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import PlantForm from "@/components/plant-form";
+import { usePlantStore } from "@/lib/store";
 
 export default function EditPlantPage() {
-  const router = useRouter()
-  const params = useParams()
-  const id = params.id as string
-  const { plants, updatePlant } = usePlantStore()
-  const [plant, setPlant] = useState(null)
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+  const { plants, updatePlant } = usePlantStore();
+  const [plant, setPlant] = useState<any>(null);
 
   useEffect(() => {
-    const foundPlant = plants.find((p) => p.id === id)
+    const foundPlant = plants.find((p: any) => p.id === id);
     if (foundPlant) {
-      setPlant(foundPlant)
+      setPlant(foundPlant);
     } else {
-      router.push("/")
+      router.push("/app");
     }
-  }, [id, plants, router])
+  }, [id, plants, router]);
 
-  const handleSubmit = (plantData) => {
-    updatePlant(id, plantData)
-    router.push("/")
-  }
+  const handleSubmit = (plantData: any) => {
+    updatePlant(id, plantData);
+    router.push("/app");
+  };
 
-  if (!plant) return null
+  if (!plant) return null;
 
   return (
     <div className="container max-w-md mx-auto px-4 py-8">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <header className="flex items-center mb-8">
           <Link href="/">
             <Button variant="ghost" size="icon" className="mr-2">
@@ -47,6 +51,5 @@ export default function EditPlantPage() {
         <PlantForm initialData={plant} onSubmit={handleSubmit} />
       </motion.div>
     </div>
-  )
+  );
 }
-

@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { LogOut, Heart } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
-import { motion } from "framer-motion"
+import { useState } from "react";
+import { LogOut, Heart } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 export default function Footer() {
-  const router = useRouter()
-  const [isHovered, setIsHovered] = useState(false)
+  const router = useRouter();
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleLogout = () => {
     // In a real app, this would clear authentication state
-    router.push("/landing")
-  }
+    router.push("/landing");
+  };
 
   return (
     <motion.footer
@@ -42,7 +42,7 @@ export default function Footer() {
             >
               <Heart className="h-3 w-3 text-red-400 fill-red-400" />
             </motion.span>
-            for plant lovers
+            for 🦎 by 🦍
           </p>
           <p>© {new Date().getFullYear()} Gecko</p>
         </div>
@@ -57,6 +57,5 @@ export default function Footer() {
         </Button>
       </div>
     </motion.footer>
-  )
+  );
 }
-
