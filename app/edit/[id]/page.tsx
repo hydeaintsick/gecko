@@ -40,7 +40,7 @@ export default function EditPlantPage() {
         transition={{ duration: 0.5 }}
       >
         <header className="flex items-center mb-8">
-          <Link href="/">
+          <Link href="/app">
             <Button variant="ghost" size="icon" className="mr-2">
               <ArrowLeft className="h-5 w-5" />
             </Button>

@@ -41,7 +41,7 @@ export default function SettingsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleSaveProfile = (e) => {
+  const handleSaveProfile = (e: any) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -55,7 +55,7 @@ export default function SettingsPage() {
     }, 1000);
   };
 
-  const handleChangePassword = (e) => {
+  const handleChangePassword = (e: any) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -86,7 +86,7 @@ export default function SettingsPage() {
         transition={{ duration: 0.5 }}
       >
         <header className="flex items-center mb-8">
-          <Link href="/">
+          <Link href="/app">
             <Button variant="ghost" size="icon" className="mr-2">
               <ArrowLeft className="h-5 w-5" />
             </Button>

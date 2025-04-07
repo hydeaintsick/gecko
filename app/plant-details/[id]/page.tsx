@@ -68,7 +68,7 @@ export default function PlantDetailsPage() {
         transition={{ duration: 0.5 }}
       >
         <header className="flex items-center mb-6">
-          <Link href="/">
+          <Link href="/app">
             <Button variant="ghost" size="icon" className="mr-2">
               <ArrowLeft className="h-5 w-5" />
             </Button>
