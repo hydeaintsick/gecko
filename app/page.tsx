@@ -88,8 +88,8 @@ export default function LandingPage() {
             </motion.div>
           </div>
 
-          <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
-            Meet Gecko
+          <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent mt-6">
+            Геккон
           </h1>
 
           {/* Centered caterpillar transformation animation */}
