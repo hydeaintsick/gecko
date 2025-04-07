@@ -44,6 +44,7 @@ const PLANT_DATABASE = [
 export default function PlantForm({ initialData = null, onSubmit }: any) {
   const [formData, setFormData] = useState({
     latinName: initialData?.latinName || "",
+    birthDate: initialData?.birthDate || "",
     customName: initialData?.customName || "",
     notes: initialData?.notes || "",
     image: initialData?.image || null,
@@ -133,6 +134,19 @@ export default function PlantForm({ initialData = null, onSubmit }: any) {
             value={formData.customName}
             onChange={handleChange}
             placeholder="Give your plant a nickname"
+            className="mt-1.5"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="customName">Birth date</Label>
+          <Input
+            id="birthDate"
+            name="birthDate"
+            value={formData.birthDate}
+            onChange={handleChange}
+            type="date"
+            placeholder="When have you got it?"
             className="mt-1.5"
           />
         </div>
