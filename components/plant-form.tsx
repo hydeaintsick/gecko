@@ -206,6 +206,7 @@ export default function PlantForm({
           <Textarea
             id="notes"
             name="notes"
+            style={{ height: 500 }}
             value={formData.notes}
             onChange={handleChange}
             placeholder="Add care instructions or other notes about your plant"
