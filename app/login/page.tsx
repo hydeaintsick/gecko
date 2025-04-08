@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import axios from "axios";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, Leaf, Mail, Lock, Eye, EyeOff } from "lucide-react";
@@ -8,6 +9,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/lib/api";
+import { useAuthStore } from "@/lib/store";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,16 +20,28 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = (e: any) => {
+  async function handleSubmit(e: any) {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate login - in a real app, this would be an API call
-    setTimeout(() => {
-      setIsLoading(false);
-      router.push("/app");
-    }, 1500);
-  };
+    const body = { email, password };
+
+    try {
+      const res = await axios.post(`${API_URL}/login`, body);
+
+      if (res?.data?.token) {
+        // set as session cookie infinite remaining
+        useAuthStore.getState().login(res.data.token);
+        router.push("/app");
+      } else {
+        toast.error("Login failed. Wrong credentials.");
+      }
+    } catch {
+      toast.error("Login failed. Wrong credentials.");
+    }
+
+    setIsLoading(false);
+  }
 
   return (
     <div className="container max-w-md mx-auto px-4 py-8 min-h-screen flex flex-col">

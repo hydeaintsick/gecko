@@ -5,12 +5,17 @@ import { LogOut, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useAuthStore } from "@/lib/store";
+import { useInitAuth } from "@/hooks/use-init-auth";
 
 export default function Footer() {
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
+  useInitAuth();
+  const { isConnected, logout } = useAuthStore();
 
   const handleLogout = () => {
+    logout();
     // In a real app, this would clear authentication state
     router.push("/");
   };
@@ -46,15 +51,17 @@ export default function Footer() {
           </p>
           <p>© {new Date().getFullYear()} Gecko</p>
         </div>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleLogout}
-          className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"
-        >
-          <LogOut className="h-3 w-3" />
-          Logout
-        </Button>
+        {isConnected && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleLogout}
+            className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"
+          >
+            <LogOut className="h-3 w-3" />
+            Logout
+          </Button>
+        )}
       </div>
     </motion.footer>
   );
