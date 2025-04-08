@@ -112,7 +112,11 @@ export default function PlantCard({ plant }: any) {
                       </DropdownMenuItem>
                     </Link>
                     <DropdownMenuItem
-                      onClick={() => setShowDeleteDialog(true)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setShowDeleteDialog(true);
+                      }}
                       className="text-red-500"
                     >
                       <Trash2 className="mr-2 h-4 w-4" />

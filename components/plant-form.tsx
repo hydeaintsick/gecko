@@ -143,13 +143,12 @@ export default function PlantForm({
         </div>
 
         <div>
-          <Label htmlFor="customName">Birth date</Label>
+          <Label htmlFor="customName">Adoption</Label>
           <Input
             id="birthDate"
             name="birthDate"
             value={formData.birthDate}
             onChange={handleChange}
-            type="date"
             placeholder="When have you got it?"
             className="mt-1.5"
           />
