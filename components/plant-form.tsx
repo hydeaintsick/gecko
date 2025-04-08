@@ -41,7 +41,11 @@ const PLANT_DATABASE = [
   },
 ];
 
-export default function PlantForm({ initialData = null, onSubmit }: any) {
+export default function PlantForm({
+  initialData = null,
+  onSubmit,
+  loading,
+}: any) {
   const [formData, setFormData] = useState({
     latinName: initialData?.latinName || "",
     birthDate: initialData?.birthDate || "",
@@ -220,6 +224,7 @@ export default function PlantForm({ initialData = null, onSubmit }: any) {
         <Button
           type="submit"
           className="w-full rounded-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600"
+          disabled={loading}
         >
           {initialData ? "Save Changes" : "Add Plant"}
         </Button>

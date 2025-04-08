@@ -3,10 +3,13 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import Cookies from "js-cookie";
+import axios from "axios";
+import { API_URL } from "./api";
 
 export type Plant = {
   id: string;
   latinName: string;
+  birthDate?: string;
   customName?: string;
   image?: string | null;
   notes?: string;
@@ -15,8 +18,9 @@ export type Plant = {
 
 type PlantStore = {
   plants: Plant[];
-  addPlant: (plant: Plant) => void;
-  updatePlant: (id: string, plant: Partial<Plant>) => void;
+  fetchPlants: () => Promise<void>;
+  addPlant: (plant: Plant) => Promise<boolean>;
+  updatePlant: (id: string, plant: Partial<Plant>) => Promise<boolean>;
   deletePlant: (id: string) => void;
 };
 
@@ -31,14 +35,66 @@ export const usePlantStore = create<PlantStore>()(
   persist(
     (set) => ({
       plants: [],
-      addPlant: (plant) =>
-        set((state) => ({ plants: [...state.plants, plant] })),
-      updatePlant: (id, updatedPlant) =>
+      fetchPlants: async () => {
+        try {
+          const res = await axios.get<Plant[]>(API_URL + "/plants", {
+            headers: { Authorization: `Bearer ${Cookies.get("gecko_token")}` },
+          });
+
+          if (res?.data?.length > 0) {
+            set({
+              plants: res.data.map((p: any) => ({
+                id: p.id,
+                latinName: p.latin,
+                customName: p.name,
+                image: p.preview,
+                notes: p.note,
+                lastWatered: null,
+              })),
+            });
+          } else {
+            set({ plants: [] });
+          }
+        } catch (err) {
+          console.error("Erreur lors du fetch des plantes :", err);
+          set({ plants: [] });
+        }
+      },
+      addPlant: async (plant) => {
+        set((state) => ({ plants: [...state.plants, plant] }));
+        const res = await axios.post(
+          `${API_URL}/plant`,
+          {
+            latin: plant.latinName,
+            preview: plant.image,
+            birthDate: plant.birthDate,
+            note: plant.notes,
+            name: plant.customName,
+          },
+          { headers: { Authorization: `Bearer ${Cookies.get("gecko_token")}` } }
+        );
+        return !!res?.data?.plant;
+      },
+      updatePlant: async (id, updatedPlant) => {
         set((state) => ({
           plants: state.plants.map((plant) =>
             plant.id === id ? { ...plant, ...updatedPlant } : plant
           ),
-        })),
+        }));
+        const res = await axios.put(
+          `${API_URL}/plant/${id}`,
+          {
+            latin: updatedPlant.latinName,
+            preview: updatedPlant.image,
+            birthDate: updatedPlant.birthDate,
+            note: updatedPlant.notes,
+            name: updatedPlant.customName,
+          },
+          { headers: { Authorization: `Bearer ${Cookies.get("gecko_token")}` } }
+        );
+        console.log("res:", res);
+        return !!res?.data?.plant;
+      },
       deletePlant: (id) =>
         set((state) => ({
           plants: state.plants.filter((plant) => plant.id !== id),

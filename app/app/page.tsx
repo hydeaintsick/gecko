@@ -11,11 +11,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Butterfly } from "@/components/butterfly";
 
 export default function HomePage() {
-  const { plants } = usePlantStore();
+  const { plants, fetchPlants } = usePlantStore();
   const [mounted, setMounted] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
+    // Fetch plants when the component mounts
+    fetchPlants();
     setMounted(true);
   }, []);
 

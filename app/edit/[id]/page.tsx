@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import PlantForm from "@/components/plant-form";
 import { usePlantStore } from "@/lib/store";
+import toast from "react-hot-toast";
 
 export default function EditPlantPage() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function EditPlantPage() {
   const id = params.id as string;
   const { plants, updatePlant } = usePlantStore();
   const [plant, setPlant] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const foundPlant = plants.find((p: any) => p.id === id);
@@ -25,10 +27,20 @@ export default function EditPlantPage() {
     }
   }, [id, plants, router]);
 
-  const handleSubmit = (plantData: any) => {
-    updatePlant(id, plantData);
-    router.push("/app");
-  };
+  async function handleSubmit(plantData: any) {
+    setLoading(true);
+    try {
+      const success = await updatePlant(id, plantData);
+      if (success) {
+        router.push("/app");
+      } else {
+        toast.error("Unable to update your plant.");
+      }
+    } catch (e) {
+      toast.error("Unable to update your plant.");
+    }
+    setLoading(false);
+  }
 
   if (!plant) return null;
 
@@ -48,7 +60,11 @@ export default function EditPlantPage() {
           <h1 className="text-2xl font-bold">Edit Plant 🪴</h1>
         </header>
 
-        <PlantForm initialData={plant} onSubmit={handleSubmit} />
+        <PlantForm
+          initialData={plant}
+          onSubmit={handleSubmit}
+          loading={loading}
+        />
       </motion.div>
     </div>
   );

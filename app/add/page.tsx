@@ -1,20 +1,35 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import PlantForm from "@/components/plant-form";
 import { usePlantStore } from "@/lib/store";
+import toast from "react-hot-toast";
 
 export default function AddPlantPage() {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
+
   const { addPlant } = usePlantStore();
 
-  const handleSubmit = (plantData: any) => {
-    addPlant(plantData);
-    router.push("/app");
-  };
+  async function handleSubmit(plantData: any) {
+    setLoading(true);
+    try {
+      const success = await addPlant(plantData);
+      if (success) {
+        router.push("/app");
+      } else {
+        toast.error("Unable to create a new plant.");
+      }
+    } catch {
+      toast.error("Unable to create a new plant.");
+    }
+    setLoading(false);
+  }
 
   return (
     <div className="container max-w-md mx-auto px-4 py-8">
@@ -32,7 +47,7 @@ export default function AddPlantPage() {
           <h1 className="text-2xl font-bold">Add New Plant 🌱</h1>
         </header>
 
-        <PlantForm onSubmit={handleSubmit} />
+        <PlantForm onSubmit={handleSubmit} loading={loading} />
       </motion.div>
     </div>
   );
