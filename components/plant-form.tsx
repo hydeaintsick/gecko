@@ -163,14 +163,20 @@ export default function PlantForm({
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 gap-2">
                 <Card
                   className="flex flex-col items-center justify-center p-4 cursor-pointer hover:bg-muted/50 transition-colors"
                   onClick={() => fileInputRef.current?.click()}
                 >
-                  <Upload className="h-8 w-8 text-muted-foreground mb-2" />
-                  <p className="text-sm font-medium">Upload</p>
-                  <p className="text-xs text-muted-foreground">from gallery</p>
+                  <div className="flex gap-2 mb-2">
+                    {/* <Upload className="h-8 w-8 text-muted-foreground mb-2" /> */}
+                    <Camera className="h-8 w-8 text-muted-foreground mb-2" />
+                  </div>
+
+                  <p className="text-sm font-medium">Add picture</p>
+                  <p className="text-xs text-center text-muted-foreground mt-2">
+                    Take it now or import from gallery
+                  </p>
                   <input
                     ref={fileInputRef}
                     type="file"
@@ -179,11 +185,14 @@ export default function PlantForm({
                     className="hidden"
                   />
                 </Card>
-                <Card className="flex flex-col items-center justify-center p-4 cursor-pointer hover:bg-muted/50 transition-colors">
+                {/* <Card
+                  className="flex flex-col items-center justify-center p-4 cursor-pointer hover:bg-muted/50 transition-colors"
+                  onClick={() => fileInputRef.current?.click()}
+                >
                   <Camera className="h-8 w-8 text-muted-foreground mb-2" />
                   <p className="text-sm font-medium">Take Photo</p>
                   <p className="text-xs text-muted-foreground">with camera</p>
-                </Card>
+                </Card> */}
               </div>
             )}
           </div>
