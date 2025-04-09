@@ -13,6 +13,7 @@ export type Plant = {
   customName?: string;
   image?: string | null;
   notes?: string;
+  emoji?: string;
   lastWatered?: string | null;
 };
 
@@ -49,6 +50,7 @@ export const usePlantStore = create<PlantStore>()(
                 customName: p.name,
                 image: p.preview,
                 notes: p.note,
+                emoji: p.emoji,
                 lastWatered: null,
               })),
             });
@@ -69,6 +71,7 @@ export const usePlantStore = create<PlantStore>()(
             preview: plant.image,
             birthDate: plant.birthDate,
             note: plant.notes,
+            emoji: plant.emoji,
             name: plant.customName,
           },
           { headers: { Authorization: `Bearer ${Cookies.get("gecko_token")}` } }
@@ -88,6 +91,7 @@ export const usePlantStore = create<PlantStore>()(
             preview: updatedPlant.image,
             birthDate: updatedPlant.birthDate,
             note: updatedPlant.notes,
+            emoji: updatedPlant.emoji,
             name: updatedPlant.customName,
           },
           { headers: { Authorization: `Bearer ${Cookies.get("gecko_token")}` } }

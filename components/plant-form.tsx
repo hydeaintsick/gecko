@@ -41,6 +41,8 @@ const PLANT_DATABASE = [
   },
 ];
 
+const EMOJIS = ["🌱", "🌿", "🍃", "🌵", "🌼", "🌸", "🌺"];
+
 export default function PlantForm({
   initialData = null,
   onSubmit,
@@ -51,6 +53,7 @@ export default function PlantForm({
     birthDate: initialData?.birthDate || "",
     customName: initialData?.customName || "",
     notes: initialData?.notes || "",
+    emoji: initialData?.emoji || "🌱",
     image: initialData?.image || null,
   });
   const [previewImage, setPreviewImage] = useState(initialData?.image || null);
@@ -132,14 +135,33 @@ export default function PlantForm({
 
         <div>
           <Label htmlFor="customName">Custom Name (Optional)</Label>
-          <Input
-            id="customName"
-            name="customName"
-            value={formData.customName}
-            onChange={handleChange}
-            placeholder="Give your plant a nickname"
-            className="mt-1.5"
-          />
+          <div className="flex items-center gap-2">
+            <Input
+              id="customName"
+              name="customName"
+              value={formData.customName}
+              onChange={handleChange}
+              placeholder="Give your plant a nickname"
+              className="flex-1 mt-1.5"
+            />
+            <Select
+              value={formData.emoji || "🌱"}
+              onValueChange={(value) =>
+                setFormData((prev) => ({ ...prev, emoji: value }))
+              }
+            >
+              <SelectTrigger id="emoji" className="w-16 mt-1.5">
+                <SelectValue placeholder="🌱" />
+              </SelectTrigger>
+              <SelectContent>
+                {EMOJIS.map((emoji, index) => (
+                  <SelectItem key={String(index)} value={emoji}>
+                    {emoji}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <div>

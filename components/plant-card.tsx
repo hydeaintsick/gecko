@@ -78,7 +78,7 @@ export default function PlantCard({ plant }: any) {
                     variant="outline"
                     className="text-xs px-1.5 py-0 h-4 bg-green-50 text-green-600 border-green-200"
                   >
-                    {getRandomEmoji()}
+                    {plant?.emoji || "🌱"}
                   </Badge>
                 </div>
                 <p className="text-xs text-muted-foreground italic truncate">
