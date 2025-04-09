@@ -6,6 +6,13 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { API_URL } from "./api";
 
+export type Memory = {
+  id: string;
+  title: string;
+  image: string | null;
+  date: string;
+};
+
 export type Plant = {
   id: string;
   latinName: string;
@@ -14,6 +21,7 @@ export type Plant = {
   image?: string | null;
   notes?: string;
   emoji?: string;
+  memories?: Memory[];
   lastWatered?: string | null;
 };
 
@@ -109,6 +117,46 @@ export const usePlantStore = create<PlantStore>()(
         });
 
         return res?.data?.code === 200;
+      },
+      addMemory(id: string, memory: Memory) {
+        set((state) => ({
+          plants: state.plants.map((plant) =>
+            plant.id === id
+              ? {
+                  ...plant,
+                  memories: [...(plant.memories || []), memory],
+                }
+              : plant
+          ),
+        }));
+      },
+      updateMemory(id: string, memoryId: string, updatedMemory: Memory) {
+        set((state) => ({
+          plants: state.plants.map((plant) =>
+            plant.id === id
+              ? {
+                  ...plant,
+                  memories: plant.memories?.map((memory) =>
+                    memory.id === memoryId ? updatedMemory : memory
+                  ),
+                }
+              : plant
+          ),
+        }));
+      },
+      deleteMemory(id: string, memoryId: string) {
+        set((state) => ({
+          plants: state.plants.map((plant) =>
+            plant.id === id
+              ? {
+                  ...plant,
+                  memories: plant.memories?.filter(
+                    (memory) => memory.id !== memoryId
+                  ),
+                }
+              : plant
+          ),
+        }));
       },
     }),
     {

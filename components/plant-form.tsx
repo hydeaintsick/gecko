@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
 import PLANT_DATABASE from "@/data/plants";
+import { MemoriesGallery } from "./memories-gallery";
 
 const EMOJIS = ["🌱", "🌿", "🍃", "🌵", "🌼", "🌸", "🌺"];
 
@@ -33,9 +34,13 @@ export default function PlantForm({
     notes: initialData?.notes || "",
     emoji: initialData?.emoji || "🌱",
     image: initialData?.image || null,
+    memories: initialData?.memories || [],
   });
   const [previewImage, setPreviewImage] = useState(initialData?.image || null);
   const fileInputRef = useRef<any>(null);
+  const [viewMode, setViewMode] = useState("gallery");
+  const [selectedMemory, setSelectedMemory] = useState(null);
+  const [isMemoryModalOpen, setIsMemoryModalOpen] = useState(false);
 
   useEffect(() => {
     console.log("formData:", formData);
@@ -81,6 +86,57 @@ export default function PlantForm({
       ...formData,
       id: initialData?.id || uuidv4(),
     });
+  };
+
+  const addMemory = () => {
+    setFormData((prev) => ({
+      ...prev,
+      memories: [
+        ...prev.memories,
+        {
+          id: uuidv4(),
+          title: "",
+          image: null,
+          date: new Date().toISOString().split("T")[0],
+        },
+      ],
+    }));
+  };
+
+  const updateMemory = (id: string, field: string, value: any) => {
+    setFormData((prev) => ({
+      ...prev,
+      memories: prev.memories.map((memory: any) =>
+        memory.id === id ? { ...memory, [field]: value } : memory
+      ),
+    }));
+  };
+
+  const removeMemory = (id: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      memories: prev.memories.filter((memory: any) => memory.id !== id),
+    }));
+  };
+
+  const handleMemoryImageUpload = (id: string, e: any) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        // Créer une image pour vérifier les dimensions
+        const img = new Image();
+        img.onload = () => {
+          updateMemory(id, "image", reader.result);
+        };
+        img.src = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const setMemories = (memories: any) => {
+    setFormData((prev) => ({ ...prev, memories }));
   };
 
   return (
@@ -187,6 +243,12 @@ export default function PlantForm({
             className="mt-1.5"
           />
         </div>
+
+        <MemoriesGallery
+          memories={formData.memories}
+          onMemoriesChange={setMemories}
+          className="mt-6"
+        />
 
         <div>
           <Label htmlFor="notes">Care Notes (Optional)</Label>
