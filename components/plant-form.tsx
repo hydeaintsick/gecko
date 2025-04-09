@@ -1,6 +1,7 @@
 "use client";
+import { useVirtualizer } from "@tanstack/react-virtual";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Camera, Upload, X } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
@@ -16,30 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
-
-// Sample plant database for the dropdown
-const PLANT_DATABASE = [
-  { value: "monstera-deliciosa", label: "Monstera Deliciosa" },
-  { value: "ficus-lyrata", label: "Ficus Lyrata (Fiddle Leaf Fig)" },
-  {
-    value: "sansevieria-trifasciata",
-    label: "Sansevieria Trifasciata (Snake Plant)",
-  },
-  {
-    value: "zamioculcas-zamiifolia",
-    label: "Zamioculcas Zamiifolia (ZZ Plant)",
-  },
-  { value: "pothos-aureum", label: "Epipremnum Aureum (Pothos)" },
-  { value: "calathea-orbifolia", label: "Calathea Orbifolia" },
-  {
-    value: "spathiphyllum-wallisii",
-    label: "Spathiphyllum Wallisii (Peace Lily)",
-  },
-  {
-    value: "chlorophytum-comosum",
-    label: "Chlorophytum Comosum (Spider Plant)",
-  },
-];
+import PLANT_DATABASE from "@/data/plants";
 
 const EMOJIS = ["🌱", "🌿", "🍃", "🌵", "🌼", "🌸", "🌺"];
 
@@ -59,12 +37,17 @@ export default function PlantForm({
   const [previewImage, setPreviewImage] = useState(initialData?.image || null);
   const fileInputRef = useRef<any>(null);
 
+  useEffect(() => {
+    console.log("formData:", formData);
+  }, [formData]);
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSelectChange = (value: any) => {
+    console.log("handleSelectChange:value:", value);
     const selectedPlant = PLANT_DATABASE.find((plant) => plant.value === value);
     setFormData((prev) => ({
       ...prev,
@@ -105,31 +88,13 @@ export default function PlantForm({
       <div className="space-y-4">
         <div>
           <Label htmlFor="latinName">Latin Name</Label>
-          <Select
-            value={
-              PLANT_DATABASE.find((p) => p.label === formData.latinName)
-                ?.value || ""
-            }
-            onValueChange={handleSelectChange}
-          >
-            <SelectTrigger id="latinName" className="mt-1.5">
-              <SelectValue placeholder="Select or type a plant name" />
-            </SelectTrigger>
-            <SelectContent>
-              {PLANT_DATABASE.map((plant) => (
-                <SelectItem key={plant.value} value={plant.value}>
-                  {plant.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
           <Input
-            id="latinNameCustom"
+            id="latinName"
             name="latinName"
             value={formData.latinName}
             onChange={handleChange}
-            placeholder="Or type a custom latin name"
-            className="mt-2"
+            placeholder="Provide the latin name of your plant"
+            className="flex-1 mt-1.5"
           />
         </div>
 
@@ -145,6 +110,7 @@ export default function PlantForm({
               className="flex-1 mt-1.5"
             />
             <Select
+              name="emoji"
               value={formData.emoji || "🌱"}
               onValueChange={(value) =>
                 setFormData((prev) => ({ ...prev, emoji: value }))
@@ -254,3 +220,87 @@ export default function PlantForm({
     </form>
   );
 }
+
+// function VirtualizedSelectContent({ items, onChange }: any) {
+//   const [selected, setSelected] = useState<any>(null);
+//   const parentRef = useRef(null);
+
+//   useEffect(() => {
+//     if (parentRef.current) {
+//       rowVirtualizer.measure(); // force recalcul
+//     }
+//   }, [parentRef.current]);
+
+//   const rowVirtualizer = useVirtualizer({
+//     count: items.length,
+//     getScrollElement: () => parentRef.current,
+//     estimateSize: () => 36,
+//   });
+
+//   function onSelectItem(item: any) {
+//     setSelected(item);
+//     if (onChange) onChange(item.value);
+//   }
+
+//   function handleSelectChange(value: any) {
+//     const selectedItem = items.find((item: any) => item.value === value);
+//     if (selectedItem) {
+//       onSelectItem(selectedItem);
+//     }
+//   }
+
+//   console.log("items:", items);
+//   console.log(
+//     "rowVirtualizer.getVirtualItems():",
+//     rowVirtualizer.getVirtualItems()
+//   );
+
+//   return (
+//     <Select
+//       value={
+//         items.find((p: any) => p.label === selected?.latinName)?.value || ""
+//       }
+//       onValueChange={handleSelectChange}
+//     >
+//       <SelectTrigger id="latinName" className="mt-1.5">
+//         <SelectValue placeholder="Select or type a plant name" />
+//       </SelectTrigger>
+//       <SelectContent>
+//         <div ref={parentRef} className="h-[200px] overflow-auto">
+//           <div
+//             style={{
+//               height: `${rowVirtualizer.getTotalSize()}px`,
+//               position: "relative",
+//             }}
+//           >
+//             {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+//               const item = items[virtualRow.index];
+//               console.log("item:", item);
+//               return (
+//                 <div
+//                   key={item.value}
+//                   data-index={virtualRow.index}
+//                   style={{
+//                     position: "absolute",
+//                     top: 0,
+//                     left: 0,
+//                     width: "100%",
+//                     transform: `translateY(${virtualRow.start}px)`,
+//                   }}
+//                 >
+//                   <SelectItem
+//                     key={item.value}
+//                     value={item.value}
+//                     onClick={() => onSelectItem(item)}
+//                   >
+//                     {item.label}
+//                   </SelectItem>
+//                 </div>
+//               );
+//             })}
+//           </div>
+//         </div>
+//       </SelectContent>
+//     </Select>
+//   );
+// }
