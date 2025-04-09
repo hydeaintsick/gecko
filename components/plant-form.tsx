@@ -85,6 +85,52 @@ export default function PlantForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="text-center">
+        <div className="mt-1.5 flex justify-center">
+          {previewImage ? (
+            <div className="relative w-[100px] h-[100px] aspect-[4/3] rounded-full overflow-hidden border border-input flex space-center">
+              <img
+                src={previewImage || "/placeholder.svg"}
+                alt="Plant preview"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-2 w-full">
+              <Card
+                className="flex flex-col items-center justify-center p-4 cursor-pointer hover:bg-muted/50 transition-colors"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <div className="flex gap-2 mb-2">
+                  <Camera className="h-8 w-8 text-muted-foreground mb-2" />
+                </div>
+
+                <p className="text-sm font-medium">Add picture</p>
+                <p className="text-xs text-center text-muted-foreground mt-2">
+                  Take it now or import from gallery
+                </p>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+              </Card>
+            </div>
+          )}
+        </div>
+        {previewImage && (
+          <Button
+            type="button"
+            variant="outline"
+            className="mt-4"
+            onClick={removeImage}
+          >
+            Change picture
+          </Button>
+        )}
+      </div>
       <div className="space-y-4">
         <div>
           <Label htmlFor="latinName">Latin Name</Label>
@@ -140,62 +186,6 @@ export default function PlantForm({
             placeholder="When have you got it?"
             className="mt-1.5"
           />
-        </div>
-
-        <div>
-          <Label>Plant Photo</Label>
-          <div className="mt-1.5">
-            {previewImage ? (
-              <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-input">
-                <img
-                  src={previewImage || "/placeholder.svg"}
-                  alt="Plant preview"
-                  className="w-full h-full object-cover"
-                />
-                <Button
-                  type="button"
-                  variant="destructive"
-                  size="icon"
-                  className="absolute top-2 right-2 rounded-full w-8 h-8"
-                  onClick={removeImage}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 gap-2">
-                <Card
-                  className="flex flex-col items-center justify-center p-4 cursor-pointer hover:bg-muted/50 transition-colors"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  <div className="flex gap-2 mb-2">
-                    {/* <Upload className="h-8 w-8 text-muted-foreground mb-2" /> */}
-                    <Camera className="h-8 w-8 text-muted-foreground mb-2" />
-                  </div>
-
-                  <p className="text-sm font-medium">Add picture</p>
-                  <p className="text-xs text-center text-muted-foreground mt-2">
-                    Take it now or import from gallery
-                  </p>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                  />
-                </Card>
-                {/* <Card
-                  className="flex flex-col items-center justify-center p-4 cursor-pointer hover:bg-muted/50 transition-colors"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  <Camera className="h-8 w-8 text-muted-foreground mb-2" />
-                  <p className="text-sm font-medium">Take Photo</p>
-                  <p className="text-xs text-muted-foreground">with camera</p>
-                </Card> */}
-              </div>
-            )}
-          </div>
         </div>
 
         <div>
