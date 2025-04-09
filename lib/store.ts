@@ -22,7 +22,7 @@ type PlantStore = {
   fetchPlants: () => Promise<void>;
   addPlant: (plant: Plant) => Promise<boolean>;
   updatePlant: (id: string, plant: Partial<Plant>) => Promise<boolean>;
-  deletePlant: (id: string) => void;
+  deletePlant: (id: string) => Promise<boolean>;
 };
 
 type AuthState = {
@@ -99,10 +99,17 @@ export const usePlantStore = create<PlantStore>()(
         console.log("res:", res);
         return !!res?.data?.plant;
       },
-      deletePlant: (id) =>
+      deletePlant: async (id) => {
         set((state) => ({
           plants: state.plants.filter((plant) => plant.id !== id),
-        })),
+        }));
+
+        const res = await axios.delete(`${API_URL}/plant/${id}`, {
+          headers: { Authorization: `Bearer ${Cookies.get("gecko_token")}` },
+        });
+
+        return res?.data?.code === 200;
+      },
     }),
     {
       name: "gecko-plant-storage",

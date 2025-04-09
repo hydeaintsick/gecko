@@ -28,6 +28,7 @@ import { Badge } from "@/components/ui/badge";
 
 export default function PlantCard({ plant }: any) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { deletePlant } = usePlantStore();
 
   // These functions are kept in the codebase but not used in the UI currently
@@ -40,6 +41,18 @@ export default function PlantCard({ plant }: any) {
     console.log("Rotate plant for light:", plant.id);
     // Implementation would go here
   };
+
+  async function handleDelete(id: string) {
+    try {
+      setLoading(true);
+      await deletePlant(id);
+      setShowDeleteDialog(false);
+    } catch (error) {
+      console.error("Error deleting plant:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <>
@@ -141,9 +154,10 @@ export default function PlantCard({ plant }: any) {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => deletePlant(plant.id)}
+              onClick={() => handleDelete(plant.id)}
+              disabled={loading}
               className="bg-red-500 hover:bg-red-600"
             >
               Delete
