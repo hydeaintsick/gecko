@@ -4,7 +4,11 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 import { API_URL } from "./api";
+import { getIDBStorage } from "./idb-storage";
+
+const idbStorage = getIDBStorage();
 
 export type Memory = {
   id: string;
@@ -60,6 +64,12 @@ export const usePlantStore = create<PlantStore>()(
                 notes: p.note,
                 emoji: p.emoji,
                 lastWatered: null,
+                memories: p.memories.map((m: any) => ({
+                  id: m?.id || uuidv4(),
+                  title: m?.title || "",
+                  image: m?.image || null,
+                  date: m?.date || new Date().toJSON(),
+                })),
               })),
             });
           } else {
@@ -81,6 +91,7 @@ export const usePlantStore = create<PlantStore>()(
             note: plant.notes,
             emoji: plant.emoji,
             name: plant.customName,
+            memories: plant?.memories || [],
           },
           { headers: { Authorization: `Bearer ${Cookies.get("gecko_token")}` } }
         );
@@ -92,6 +103,7 @@ export const usePlantStore = create<PlantStore>()(
             plant.id === id ? { ...plant, ...updatedPlant } : plant
           ),
         }));
+        console.log("gecko TOKEN:", Cookies.get("gecko_token"));
         const res = await axios.put(
           `${API_URL}/plant/${id}`,
           {
@@ -101,6 +113,7 @@ export const usePlantStore = create<PlantStore>()(
             note: updatedPlant.notes,
             emoji: updatedPlant.emoji,
             name: updatedPlant.customName,
+            memories: updatedPlant?.memories || [],
           },
           { headers: { Authorization: `Bearer ${Cookies.get("gecko_token")}` } }
         );
@@ -118,7 +131,7 @@ export const usePlantStore = create<PlantStore>()(
 
         return res?.data?.code === 200;
       },
-      addMemory(id: string, memory: Memory) {
+      addMemory: async (id: string, memory: Memory) => {
         set((state) => ({
           plants: state.plants.map((plant) =>
             plant.id === id
@@ -161,6 +174,10 @@ export const usePlantStore = create<PlantStore>()(
     }),
     {
       name: "gecko-plant-storage",
+      storage: idbStorage,
+      partialize: (state) => ({
+        plants: state.plants, // on ne garde QUE les données sérialisables
+      }),
     }
   )
 );

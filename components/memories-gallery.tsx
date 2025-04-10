@@ -31,6 +31,8 @@ export function MemoriesGallery({
   const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null);
   const [isMemoryModalOpen, setIsMemoryModalOpen] = useState(false);
 
+  console.log("memories:", memories);
+
   const addMemory = () => {
     const newMemories = [
       ...memories,
@@ -38,7 +40,7 @@ export function MemoriesGallery({
         id: uuidv4(),
         title: "",
         image: null,
-        date: new Date().toISOString().split("T")[0],
+        date: new Date().toJSON(),
       },
     ];
     onMemoriesChange(newMemories);
@@ -62,24 +64,28 @@ export function MemoriesGallery({
     onMemoriesChange(filteredMemories);
   };
 
-  const handleMemoryImageUpload = (id: string, e: any) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const img = new Image();
-        img.onload = () => {
-          updateMemory(id, "image", reader.result);
-        };
-        img.src = reader.result as string;
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleMemoryImageUpload = (
+    id: string,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64 = reader.result as string; // C'est déjà en base64 avec Data URL
+      updateMemory(id, "image", base64);
+    };
+
+    reader.readAsDataURL(file); // convertit le fichier en Data URL (base64)
   };
+
+  const openDeviceLibrary = (memoryId: string) =>
+    document.getElementById(`memory-image-${memoryId}`)?.click();
 
   return (
     <div className={className}>
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center justify-between mb-2 h-[60px]">
         <div className="flex items-center gap-2">
           <Label htmlFor="edit-mode" className="text-sm">
             Memories
@@ -157,25 +163,6 @@ export function MemoriesGallery({
                           className="mt-1"
                         />
                       </div>
-
-                      {/* <div>
-                        <Label
-                          htmlFor={`memory-date-${index}`}
-                          className="text-sm"
-                        >
-                          Date
-                        </Label>
-                        <Input
-                          id={`memory-date-${index}`}
-                          type="date"
-                          value={memory.date}
-                          onChange={(e) =>
-                            updateMemory(memory.id, "date", e.target.value)
-                          }
-                          className="mt-1"
-                        />
-                      </div> */}
-
                       <div>
                         <Label className="text-sm">Photo</Label>
                         <div className="mt-1">
@@ -188,40 +175,34 @@ export function MemoriesGallery({
                               />
                               <Button
                                 type="button"
-                                variant="destructive"
+                                variant="outline"
                                 size="icon"
-                                className="absolute top-2 right-2 rounded-full w-8 h-8"
-                                onClick={() =>
-                                  updateMemory(memory.id, "image", null)
-                                }
+                                className="absolute top-[42%] left-[10%] rounded-full w-[80%] h-10"
+                                onClick={() => openDeviceLibrary(memory.id)}
                               >
-                                <X className="h-4 w-4" />
+                                Change
                               </Button>
                             </div>
                           ) : (
                             <div
                               className="flex flex-col items-center justify-center p-4 cursor-pointer hover:bg-muted/50 transition-colors border rounded-lg aspect-square"
-                              onClick={() =>
-                                document
-                                  .getElementById(`memory-image-${memory.id}`)
-                                  ?.click()
-                              }
+                              onClick={() => openDeviceLibrary(memory.id)}
                             >
                               <Camera className="h-6 w-6 text-muted-foreground mb-2" />
                               <p className="text-xs font-medium">
                                 Add memory photo
                               </p>
-                              <input
-                                id={`memory-image-${memory.id}`}
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) =>
-                                  handleMemoryImageUpload(memory.id, e)
-                                }
-                                className="hidden"
-                              />
                             </div>
                           )}
+                          <input
+                            id={`memory-image-${memory.id}`}
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) =>
+                              handleMemoryImageUpload(memory.id, e)
+                            }
+                            className="hidden"
+                          />
                         </div>
                       </div>
                     </div>
@@ -229,8 +210,6 @@ export function MemoriesGallery({
                 ))}
               </div>
             </div>
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 bg-gradient-to-r from-background to-transparent h-full pointer-events-none"></div>
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 bg-gradient-to-l from-background to-transparent h-full pointer-events-none"></div>
           </div>
         ) : (
           <div className="mt-2">
@@ -271,8 +250,6 @@ export function MemoriesGallery({
                   ))}
                 </div>
               </div>
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 bg-gradient-to-r from-background to-transparent h-full pointer-events-none"></div>
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 bg-gradient-to-l from-background to-transparent h-full pointer-events-none"></div>
             </div>
           </div>
         )

@@ -37,6 +37,7 @@ export default function EditPlantPage() {
         toast.error("Unable to update your plant.");
       }
     } catch (e) {
+      console.log("Error updating plant:", e);
       toast.error("Unable to update your plant.");
     }
     setLoading(false);

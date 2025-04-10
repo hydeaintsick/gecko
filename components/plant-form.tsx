@@ -51,14 +51,14 @@ export default function PlantForm({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSelectChange = (value: any) => {
-    console.log("handleSelectChange:value:", value);
-    const selectedPlant = PLANT_DATABASE.find((plant) => plant.value === value);
-    setFormData((prev) => ({
-      ...prev,
-      latinName: selectedPlant ? selectedPlant.label : value,
-    }));
-  };
+  // const handleSelectChange = (value: any) => {
+  //   console.log("handleSelectChange:value:", value);
+  //   const selectedPlant = PLANT_DATABASE.find((plant) => plant.value === value);
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     latinName: selectedPlant ? selectedPlant.label : value,
+  //   }));
+  // };
 
   const handleImageUpload = (e: any) => {
     const file = e.target.files[0];
@@ -88,52 +88,52 @@ export default function PlantForm({
     });
   };
 
-  const addMemory = () => {
-    setFormData((prev) => ({
-      ...prev,
-      memories: [
-        ...prev.memories,
-        {
-          id: uuidv4(),
-          title: "",
-          image: null,
-          date: new Date().toISOString().split("T")[0],
-        },
-      ],
-    }));
-  };
+  // const addMemory = () => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     memories: [
+  //       ...prev.memories,
+  //       {
+  //         id: uuidv4(),
+  //         title: "",
+  //         image: null,
+  //         date: new Date().toISOString().split("T")[0],
+  //       },
+  //     ],
+  //   }));
+  // };
 
-  const updateMemory = (id: string, field: string, value: any) => {
-    setFormData((prev) => ({
-      ...prev,
-      memories: prev.memories.map((memory: any) =>
-        memory.id === id ? { ...memory, [field]: value } : memory
-      ),
-    }));
-  };
+  // const updateMemory = (id: string, field: string, value: any) => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     memories: prev.memories.map((memory: any) =>
+  //       memory.id === id ? { ...memory, [field]: value } : memory
+  //     ),
+  //   }));
+  // };
 
-  const removeMemory = (id: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      memories: prev.memories.filter((memory: any) => memory.id !== id),
-    }));
-  };
+  // const removeMemory = (id: string) => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     memories: prev.memories.filter((memory: any) => memory.id !== id),
+  //   }));
+  // };
 
-  const handleMemoryImageUpload = (id: string, e: any) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        // Créer une image pour vérifier les dimensions
-        const img = new Image();
-        img.onload = () => {
-          updateMemory(id, "image", reader.result);
-        };
-        img.src = reader.result as string;
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleMemoryImageUpload = (id: string, e: any) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       // Créer une image pour vérifier les dimensions
+  //       const img = new Image();
+  //       img.onload = () => {
+  //         updateMemory(id, "image", reader.result);
+  //       };
+  //       img.src = reader.result as string;
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   const setMemories = (memories: any) => {
     setFormData((prev) => ({ ...prev, memories }));
