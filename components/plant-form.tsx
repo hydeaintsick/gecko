@@ -22,6 +22,17 @@ import { MemoriesGallery } from "./memories-gallery";
 
 const EMOJIS = ["🌱", "🌿", "🍃", "🌵", "🌼", "🌸", "🌺"];
 
+const DEFAULT_PLANT_NOTES = `• Exposition : 
+• Arrosage : 
+• Sol : 
+• Rempotage :
+• Coupe : 
+• Bouturage :
+• Maladies/symptômes : 
+• Autres :
+
+`;
+
 export default function PlantForm({
   initialData = null,
   onSubmit,
@@ -31,7 +42,10 @@ export default function PlantForm({
     latinName: initialData?.latinName || "",
     birthDate: initialData?.birthDate || "",
     customName: initialData?.customName || "",
-    notes: initialData?.notes || "",
+    notes:
+      initialData?.notes && initialData?.notes.length > 0
+        ? initialData.notes
+        : DEFAULT_PLANT_NOTES,
     emoji: initialData?.emoji || "🌱",
     image: initialData?.image || null,
     memories: initialData?.memories || [],
