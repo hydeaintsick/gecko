@@ -11,7 +11,6 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Gecko - Plant Tracking App",
   description: "Track and care for your plants with Gecko",
-  generator: "v0.dev",
 };
 
 export default function RootLayout({
