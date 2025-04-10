@@ -177,7 +177,7 @@ export function MemoriesGallery({
                                 type="button"
                                 variant="outline"
                                 size="icon"
-                                className="absolute top-[42%] left-[10%] rounded-full w-[80%] h-10"
+                                className="absolute top-[42%] left-[10%] w-[80%] h-10"
                                 onClick={() => openDeviceLibrary(memory.id)}
                               >
                                 Change
@@ -243,7 +243,7 @@ export function MemoriesGallery({
                           {memory.title || `Memory ${index + 1}`}
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {memory.date}
+                          {new Date(memory.date).toLocaleDateString("fr-FR")}
                         </p>
                       </div>
                     </div>
@@ -273,8 +273,8 @@ export function MemoriesGallery({
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-4">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold">
+              <div className="flex justify-between items-center mb-4 w-full">
+                <h3 className="text-lg text-center font-semibold">
                   {selectedMemory.title || "Memory"}
                 </h3>
                 <Button
@@ -301,8 +301,8 @@ export function MemoriesGallery({
               )}
 
               <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">
-                  Date: {selectedMemory.date}
+                <p className="text-sm text-center text-muted-foreground">
+                  {new Date(selectedMemory.date).toLocaleDateString("fr-FR")}
                 </p>
               </div>
             </div>
