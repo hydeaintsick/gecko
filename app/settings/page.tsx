@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
+import { useAuthStore } from "@/lib/store";
 
 export default function SettingsPage() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -40,6 +41,14 @@ export default function SettingsPage() {
   const [newPassword, setNewPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { user } = useAuthStore();
+
+  useEffect(() => {
+    if (user) {
+      setName(user.name);
+      setEmail(user.email);
+    }
+  }, [user]);
 
   const handleSaveProfile = (e: any) => {
     e.preventDefault();

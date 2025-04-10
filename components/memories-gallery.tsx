@@ -31,8 +31,6 @@ export function MemoriesGallery({
   const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null);
   const [isMemoryModalOpen, setIsMemoryModalOpen] = useState(false);
 
-  console.log("memories:", memories);
-
   const addMemory = () => {
     const newMemories = [
       ...memories,

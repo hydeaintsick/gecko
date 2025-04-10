@@ -38,10 +38,19 @@ type PlantStore = {
 };
 
 type AuthState = {
+  user: UserSession | null;
   token: string | null;
   isConnected: boolean;
-  login: (token: string) => void;
+  login: (token: string) => Promise<boolean>;
   logout: () => void;
+  initialize: () => Promise<boolean>;
+};
+
+type UserSession = {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: string;
 };
 
 export const usePlantStore = create<PlantStore>()(
@@ -103,7 +112,6 @@ export const usePlantStore = create<PlantStore>()(
             plant.id === id ? { ...plant, ...updatedPlant } : plant
           ),
         }));
-        console.log("gecko TOKEN:", Cookies.get("gecko_token"));
         const res = await axios.put(
           `${API_URL}/plant/${id}`,
           {
@@ -117,7 +125,6 @@ export const usePlantStore = create<PlantStore>()(
           },
           { headers: { Authorization: `Bearer ${Cookies.get("gecko_token")}` } }
         );
-        console.log("res:", res);
         return !!res?.data?.plant;
       },
       deletePlant: async (id) => {
@@ -185,21 +192,42 @@ export const usePlantStore = create<PlantStore>()(
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
+      user: null,
       token: null,
       isConnected: false,
-      login: (token: string) => {
+      login: async (token: string) => {
         Cookies.set("gecko_token", token, { expires: 365 });
         set({ token, isConnected: true });
+
+        const res = await axios.get(`${API_URL}/session`, {
+          headers: { Authorization: `Bearer ${Cookies.get("gecko_token")}` },
+        });
+
+        if (res?.data?.code === 200) {
+          set({ user: res.data.user });
+          return true;
+        }
+
+        return false;
       },
       logout: () => {
         Cookies.remove("gecko_token");
         set({ token: null, isConnected: false });
       },
-      initialize: () => {
+      initialize: async () => {
         const token = Cookies.get("gecko_token");
         if (token) {
           set({ token, isConnected: true });
+          const res = await axios.get(`${API_URL}/session`, {
+            headers: { Authorization: `Bearer ${Cookies.get("gecko_token")}` },
+          });
+
+          if (res?.data?.code === 200) {
+            set({ user: res.data.user });
+            return true;
+          }
         }
+        return false;
       },
     }),
     {
