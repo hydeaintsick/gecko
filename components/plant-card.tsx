@@ -60,7 +60,7 @@ export default function PlantCard({ plant }: any) {
         whileHover={{ x: 5 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
-        <Link href={`/edit/${plant.id}`}>
+        <Link href={`/edit?id=${plant.id}`}>
           <Card className="overflow-hidden border-green-100 hover:shadow-md transition-shadow">
             <div className="flex items-center p-3">
               {/* Plant image/avatar */}
@@ -118,7 +118,7 @@ export default function PlantCard({ plant }: any) {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <Link href={`/edit/${plant.id}`}>
+                    <Link href={`/edit?id=${plant.id}`}>
                       <DropdownMenuItem>
                         <Edit className="mr-2 h-4 w-4" />
                         Edit

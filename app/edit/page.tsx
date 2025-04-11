@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,11 +12,17 @@ import toast from "react-hot-toast";
 
 export default function EditPlantPage() {
   const router = useRouter();
-  const params = useParams();
-  const id = params.id as string;
+  const searchParams = useSearchParams();
   const { plants, updatePlant } = usePlantStore();
   const [plant, setPlant] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const id = searchParams.get("id");
+
+  // Si y a pas d'id, on redirige vers app
+  if (!id) {
+    router.push("/app");
+    return null;
+  }
 
   useEffect(() => {
     const foundPlant = plants.find((p: any) => p.id === id);
@@ -30,7 +36,7 @@ export default function EditPlantPage() {
   async function handleSubmit(plantData: any) {
     setLoading(true);
     try {
-      const success = await updatePlant(id, plantData);
+      const success = await updatePlant(id as string, plantData);
       if (success) {
         router.push("/app");
       } else {

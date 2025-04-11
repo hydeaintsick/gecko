@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter as useFrontRouter } from "next/router";
 import { motion } from "framer-motion";
 import { ArrowLeft, Droplets, Sun, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,12 +15,19 @@ import { Butterfly } from "@/components/butterfly";
 
 export default function PlantDetailsPage() {
   const router = useRouter();
-  const params = useParams();
-  const id = params.id as string;
+  const searchParams = useSearchParams();
   const { plants } = usePlantStore();
   const [plant, setPlant] = useState<any>(null);
   const [isWatering, setIsWatering] = useState(false);
   const [isRotating, setIsRotating] = useState(false);
+
+  const id = searchParams.get("id");
+
+  // Si y a pas d'id, on redirige vers app
+  if (!id) {
+    router.push("/app");
+    return null;
+  }
 
   useEffect(() => {
     const foundPlant = plants.find((p) => p.id === id);
@@ -127,7 +135,10 @@ export default function PlantDetailsPage() {
               )}
             </motion.div>
 
-            <Link href={`/edit/${plant.id}`} className="absolute top-3 right-3">
+            <Link
+              href={`/edit?id=${plant.id}`}
+              className="absolute top-3 right-3"
+            >
               <Button
                 variant="ghost"
                 size="icon"
