@@ -9,15 +9,24 @@ import { usePlantStore } from "@/lib/store";
 import PlantCard from "@/components/plant-card";
 import { motion, AnimatePresence } from "framer-motion";
 import { Butterfly } from "@/components/butterfly";
+import { SyncToast } from "@/components/sync-toast";
 
 export default function HomePage() {
   const { plants, fetchPlants } = usePlantStore();
   const [mounted, setMounted] = useState(false);
+  const [syncLoading, setSyncLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     // Fetch plants when the component mounts
-    fetchPlants();
+    async function fetchRemoteDB() {
+      setSyncLoading(true);
+      await fetchPlants();
+      setSyncLoading(false);
+    }
+
+    fetchRemoteDB();
+
     setMounted(true);
   }, []);
 
@@ -217,6 +226,7 @@ export default function HomePage() {
           )}
         </AnimatePresence>
       </motion.div>
+      <SyncToast isOpen={syncLoading} />
     </div>
   );
 }
