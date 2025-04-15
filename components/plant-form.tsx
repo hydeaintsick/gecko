@@ -1,9 +1,8 @@
 "use client";
-import { useVirtualizer } from "@tanstack/react-virtual";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Camera, Upload, X } from "lucide-react";
+import { Camera } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +16,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
-import PLANT_DATABASE from "@/data/plants";
 import { MemoriesGallery } from "./memories-gallery";
 
 const EMOJIS = ["🌱", "🌿", "🍃", "🌵", "🌼", "🌸", "🌺"];
