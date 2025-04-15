@@ -10,12 +10,14 @@ import PlantCard from "@/components/plant-card";
 import { motion, AnimatePresence } from "framer-motion";
 import { Butterfly } from "@/components/butterfly";
 import { SyncToast } from "@/components/sync-toast";
+import { useTranslations } from "next-intl";
 
 export default function HomePage() {
   const { plants, fetchPlants } = usePlantStore();
   const [mounted, setMounted] = useState(false);
   const [syncLoading, setSyncLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const t = useTranslations();
 
   useEffect(() => {
     // Fetch plants when the component mounts
@@ -74,15 +76,15 @@ export default function HomePage() {
         <header className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
-              Gecko
+              {t("root.title")}
             </h1>
-            <p className="text-muted-foreground">Your plant companion 🌿</p>
+            <p className="text-muted-foreground">{t("root.description")}</p>
           </div>
           <div className="flex gap-2">
             <Link href="/add">
               <Button className="rounded-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600">
                 <PlusCircle className="mr-2 h-4 w-4" />
-                Add Plant
+                {t("root.add")}
               </Button>
             </Link>
             <Link href="/settings">
@@ -98,7 +100,7 @@ export default function HomePage() {
           <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="text"
-            placeholder="Search plants..."
+            placeholder={t("root.search")}
             className="pl-10 rounded-full border-green-100"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -129,13 +131,13 @@ export default function HomePage() {
               >
                 <Leaf className="h-10 w-10 text-green-500" />
               </motion.div>
-              <h2 className="text-xl font-medium mb-2">No plants yet! 🌱</h2>
+              <h2 className="text-xl font-medium mb-2">{t("root.noYet")}</h2>
               <p className="text-muted-foreground mb-4">
-                Start adding your plant friends to track their care
+                {t("root.initialStart")}
               </p>
               <Link href="/add">
                 <Button variant="outline" className="rounded-full">
-                  Add your first plant
+                  {t("root.addFirst")}
                 </Button>
               </Link>
 
@@ -166,8 +168,10 @@ export default function HomePage() {
               <div className="flex items-center justify-between mb-3">
                 <h2 className="text-sm font-medium text-muted-foreground">
                   {filteredPlants.length}{" "}
-                  {filteredPlants.length === 1 ? "plant" : "plants"} in your
-                  garden
+                  {filteredPlants.length === 1
+                    ? t("common.plant")
+                    : t("common.plants")}{" "}
+                  {t("root.garden")}
                 </h2>
                 {searchQuery && filteredPlants.length !== plants.length && (
                   <Button
@@ -176,7 +180,7 @@ export default function HomePage() {
                     className="text-xs h-7 px-2"
                     onClick={() => setSearchQuery("")}
                   >
-                    Clear filter
+                    {t("root.clearFilters")}
                   </Button>
                 )}
               </div>
@@ -201,7 +205,7 @@ export default function HomePage() {
                     className="text-center py-10"
                   >
                     <p className="text-muted-foreground">
-                      No plants match your search 🔍
+                      {t("root.noResult")}
                     </p>
                   </motion.div>
                 )}

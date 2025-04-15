@@ -1,0 +1,53 @@
+{
+  "settings": {
+    "title": "Paramètres",
+    "language": {
+      "title": "Langue de l'application"
+    },
+    "profile": {
+      "title": "Informations du profil",
+      "name": "Nom",
+      "email": "Email",
+      "save": "Enregistrer"
+    },
+    "password": {
+      "title": "Changer le mot de passe",
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "save": "Mettre à jour"
+    },
+    "delete": {
+      "title": "Supprimer le compte",
+      "description": "Une fois votre compte supprimé, il n'y aura aucun retour en arrière possible. Veuillez en être certain.",
+      "delete": "Supprimer le compte",
+      "cancel": "Annuler",
+      "modal": {
+        "title": "En êtes-vous sûr ?",
+        "description": "Cette action est irréversible. Elle supprimera définitivement votre compte et effacera vos données de nos serveurs."
+      }
+    }
+  },
+  "root": {
+    "title": "Gecko",
+    "description": "Votre assistant nature 🌿",
+    "garden": "dans votre jardin",
+    "search": "Rechercher une plante...",
+    "noResult": "Aucune plante ne correspond à votre recherche 🔍",
+    "noYet": "Pas encore de plantes ! 🌱",
+    "clearFilters": "Effacer les filtres",
+    "add": "Ajouter",
+    "addFirst": "Ajoutez votre première plante",
+    "initialStart": "Commencez à ajouter vos amies plantes pour suivre leurs soins."
+  },
+  "footer": {
+    "madeWith": "Fait avec",
+    "by": "par",
+    "for": "pour",
+    "logout": "Déconnexion"
+  },
+  "common": {
+    "plant": "plante",
+    "plants": "plantes",
+    "syncing": "Chargement..."
+  }
+}

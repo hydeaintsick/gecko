@@ -7,12 +7,14 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useAuthStore } from "@/lib/store";
 import { useInitAuth } from "@/hooks/use-init-auth";
+import { useTranslations } from "next-intl";
 
 export default function Footer() {
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
   useInitAuth();
   const { isConnected, logout } = useAuthStore();
+  const t = useTranslations();
 
   const handleLogout = () => {
     logout();
@@ -30,7 +32,7 @@ export default function Footer() {
       <div className="container max-w-md mx-auto flex items-center justify-between">
         <div className="text-xs text-muted-foreground">
           <p className="flex items-center">
-            Made with
+            {t("footer.madeWith")}
             <motion.span
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
@@ -47,7 +49,7 @@ export default function Footer() {
             >
               <Heart className="h-3 w-3 text-red-400 fill-red-400" />
             </motion.span>
-            for 🦎 by 🦍
+            {t("footer.for")} 🦎 {t("footer.by")} 🦍
           </p>
           <p>© {new Date().getFullYear()} Gecko</p>
         </div>
@@ -59,7 +61,7 @@ export default function Footer() {
             className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"
           >
             <LogOut className="h-3 w-3" />
-            Logout
+            {t("footer.logout")}
           </Button>
         )}
       </div>

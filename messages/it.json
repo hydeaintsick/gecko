@@ -1,0 +1,53 @@
+{
+  "settings": {
+    "title": "Impostazioni",
+    "language": {
+      "title": "Lingua dell'app"
+    },
+    "profile": {
+      "title": "Informazioni del profilo",
+      "name": "Nome",
+      "email": "Email",
+      "save": "Salva modifiche"
+    },
+    "password": {
+      "title": "Cambia password",
+      "currentPassword": "Password attuale",
+      "newPassword": "Nuova password",
+      "save": "Aggiorna password"
+    },
+    "delete": {
+      "title": "Elimina account",
+      "description": "Una volta eliminato l'account, non sarà possibile tornare indietro. Si prega di esserne certi.",
+      "delete": "Elimina account",
+      "cancel": "Annulla",
+      "modal": {
+        "title": "Sei sicuro?",
+        "description": "Questa azione è irreversibile. L'account sarà eliminato e i dati rimossi dai nostri server."
+      }
+    }
+  },
+  "root": {
+    "title": "Gecko",
+    "description": "Il tuo compagno di piante 🌿",
+    "garden": "nel tuo giardino",
+    "search": "Cerca piante...",
+    "noResult": "Nessuna pianta corrisponde alla tua ricerca 🔍",
+    "noYet": "Nessuna pianta ancora! 🌱",
+    "clearFilters": "Cancella filtri",
+    "add": "Aggiungi pianta",
+    "addFirst": "Aggiungi la tua prima pianta",
+    "initialStart": "Inizia ad aggiungere le tue piante per monitorarne la cura."
+  },
+  "footer": {
+    "madeWith": "Fatto con",
+    "by": "da",
+    "for": "per",
+    "logout": "Disconnetti"
+  },
+  "common": {
+    "plant": "pianta",
+    "plants": "piante",
+    "syncing": "Sincronizzazione in corso..."
+  }
+}

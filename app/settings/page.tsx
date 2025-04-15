@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,6 +32,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
 import { useAuthStore } from "@/lib/store";
+import { useLocale, languages } from "@/app/providers/intl-provider";
 
 export default function SettingsPage() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -42,6 +44,8 @@ export default function SettingsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { user } = useAuthStore();
+  const { locale, setAppLocale } = useLocale();
+  const t = useTranslations();
 
   useEffect(() => {
     if (user) {
@@ -100,8 +104,25 @@ export default function SettingsPage() {
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold">Account Settings</h1>
+          <h1 className="text-2xl font-bold">{t("settings.title")}</h1>
         </header>
+
+        <section className="mb-8">
+          <h2 className="text-lg font-medium mb-2">
+            {t("settings.language.title")}
+          </h2>
+          <select
+            value={locale}
+            onChange={(e) => setAppLocale(e.target.value)}
+            className="w-full rounded-md border px-4 py-2 bg-background"
+          >
+            {languages.map((lang) => (
+              <option key={lang.code} value={lang.code}>
+                {lang.flag} {lang.label}
+              </option>
+            ))}
+          </select>
+        </section>
 
         <div className="space-y-8">
           {/* Profile Information */}
@@ -110,10 +131,12 @@ export default function SettingsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <h2 className="text-lg font-medium mb-4">Profile Information</h2>
+            <h2 className="text-lg font-medium mb-4">
+              {t("settings.profile.title")}
+            </h2>
             <form onSubmit={handleSaveProfile} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name">{t("settings.profile.name")}</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -127,7 +150,7 @@ export default function SettingsPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("settings.profile.email")}</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -146,7 +169,7 @@ export default function SettingsPage() {
                 disabled={isLoading}
               >
                 <Save className="mr-2 h-4 w-4" />
-                Save Changes
+                {t("settings.profile.save")}
               </Button>
             </form>
           </motion.section>
@@ -159,10 +182,14 @@ export default function SettingsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <h2 className="text-lg font-medium mb-4">Change Password</h2>
+            <h2 className="text-lg font-medium mb-4">
+              {t("settings.password.title")}
+            </h2>
             <form onSubmit={handleChangePassword} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="currentPassword">Current Password</Label>
+                <Label htmlFor="currentPassword">
+                  {t("settings.password.currentPassword")}
+                </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -189,7 +216,9 @@ export default function SettingsPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="newPassword">New Password</Label>
+                <Label htmlFor="newPassword">
+                  {t("settings.password.newPassword")}
+                </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -220,7 +249,7 @@ export default function SettingsPage() {
                 className="w-full rounded-full"
                 disabled={isLoading}
               >
-                Update Password
+                {t("settings.password.save")}
               </Button>
             </form>
           </motion.section>
@@ -234,34 +263,38 @@ export default function SettingsPage() {
             transition={{ delay: 0.3 }}
             className="pb-10"
           >
-            <h2 className="text-lg font-medium mb-4">Delete Account</h2>
+            <h2 className="text-lg font-medium mb-4">
+              {t("settings.delete.title")}
+            </h2>
             <p className="text-sm text-muted-foreground mb-4">
-              Once you delete your account, there is no going back. Please be
-              certain.
+              {t("settings.delete.description")}
             </p>
 
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button variant="destructive" className="w-full rounded-full">
                   <Trash2 className="mr-2 h-4 w-4" />
-                  Delete Account
+                  {t("settings.delete.delete")}
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogTitle>
+                    {t("settings.delete.modal.title")}
+                  </AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    your account and remove your data from our servers.
+                    {t("settings.delete.modal.description")}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel>
+                    {t("settings.delete.cancel")}
+                  </AlertDialogCancel>
                   <AlertDialogAction
                     onClick={handleDeleteAccount}
                     className="bg-red-500 hover:bg-red-600"
                   >
-                    Delete Account
+                    {t("settings.delete.delete")}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface SyncToastProps {
   isOpen?: boolean;
@@ -17,6 +18,7 @@ export function SyncToast({
   autoCloseTime = 10000,
 }: SyncToastProps) {
   const [isVisible, setIsVisible] = useState(isOpen);
+  const t = useTranslations();
 
   useEffect(() => {
     setIsVisible(isOpen);
@@ -37,7 +39,7 @@ export function SyncToast({
     <div className="fixed bottom-[80px] left-1/2 transform -translate-x-1/2 z-50 flex items-center justify-center">
       <div className="bg-white rounded-full shadow-lg px-6 py-3 flex items-center gap-3 border border-green-100">
         <PlantAnimation />
-        <span className="text-gray-700">Syncing...</span>
+        <span className="text-gray-700">{t("common.syncing")}</span>
       </div>
     </div>
   );

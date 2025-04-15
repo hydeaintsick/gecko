@@ -1,0 +1,53 @@
+{
+  "settings": {
+    "title": "Settings",
+    "language": {
+      "title": "Language"
+    },
+    "profile": {
+      "title": "Profile Information",
+      "name": "Name",
+      "email": "Email",
+      "save": "Save changes"
+    },
+    "password": {
+      "title": "Change Password",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "save": "Update password"
+    },
+    "delete": {
+      "title": "Delete Account",
+      "description": "Once you delete your account, there is no going back. Please be certain.",
+      "delete": "Delete Account",
+      "cancel": "Cancel",
+      "modal": {
+        "title": "Are you absolutely sure?",
+        "description": "This action cannot be undone. This will permanently delete your account and remove your data from our servers."
+      }
+    }
+  },
+  "root": {
+    "title": "Gecko",
+    "description": "Your plant companion 🌿",
+    "garden": "in your garden",
+    "search": "Search plants...",
+    "noResult": "No plants match your search 🔍",
+    "noYet": "No plants yet! 🌱",
+    "clearFilters": "Clear filter",
+    "add": "Add Plant",
+    "addFirst": "Add your first plant",
+    "initialStart": "Start adding your plant friends to track their care."
+  },
+  "footer": {
+    "madeWith": "Made with",
+    "by": "by",
+    "for": "for",
+    "logout": "Logout"
+  },
+  "common": {
+    "plant": "plant",
+    "plants": "plants",
+    "syncing": "Syncing..."
+  }
+}

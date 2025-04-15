@@ -6,6 +6,7 @@ import Footer from "@/components/footer";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as RToaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
+import CustomIntlProvider from "./providers/intl-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,14 +23,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light">
-          <div className="min-h-screen bg-gradient-to-b from-green-50 to-white flex flex-col">
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-          <Toaster />
-          <RToaster position="bottom-center" />
-        </ThemeProvider>
+        <CustomIntlProvider>
+          <ThemeProvider attribute="class" defaultTheme="light">
+            <div className="min-h-screen bg-gradient-to-b from-green-50 to-white flex flex-col">
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+            <Toaster />
+            <RToaster position="bottom-center" />
+          </ThemeProvider>
+        </CustomIntlProvider>
       </body>
       <Analytics />
     </html>
