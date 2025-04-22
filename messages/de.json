@@ -1,0 +1,91 @@
+{
+  "settings": {
+    "title": "Einstellungen",
+    "language": {
+      "title": "Sprache"
+    },
+    "profile": {
+      "title": "Profilinformationen",
+      "name": "Name",
+      "email": "E-Mail",
+      "save": "Änderungen speichern"
+    },
+    "password": {
+      "title": "Passwort ändern",
+      "currentPassword": "Aktuelles Passwort",
+      "newPassword": "Neues Passwort",
+      "save": "Passwort aktualisieren"
+    },
+    "delete": {
+      "title": "Konto löschen",
+      "description": "Sobald du dein Konto gelöscht hast, gibt es kein Zurück mehr. Bitte sei dir sicher.",
+      "delete": "Konto löschen",
+      "cancel": "Abbrechen",
+      "modal": {
+        "title": "Bist du dir wirklich sicher?",
+        "description": "Diese Aktion kann nicht rückgängig gemacht werden. Dein Konto wird dauerhaft gelöscht und deine Daten werden von unseren Servern entfernt."
+      }
+    }
+  },
+  "root": {
+    "title": "Gecko",
+    "description": "Dein Pflanzenbegleiter 🌿",
+    "garden": "in deinem Garten",
+    "search": "Pflanzen suchen...",
+    "noResult": "Keine Pflanzen entsprechen deiner Suche 🔍",
+    "noYet": "Noch keine Pflanzen! 🌱",
+    "clearFilters": "Filter löschen",
+    "add": "Pflanze hinzufügen",
+    "addFirst": "Füge deine erste Pflanze hinzu",
+    "initialStart": "Beginne damit, deine Pflanzenfreunde hinzuzufügen, um ihre Pflege zu verfolgen."
+  },
+  "footer": {
+    "madeWith": "Gemacht mit",
+    "by": "von",
+    "for": "für",
+    "logout": "Abmelden"
+  },
+  "common": {
+    "plant": "Pflanze",
+    "plants": "Pflanzen",
+    "syncing": "Synchronisiere..."
+  },
+  "plantPage": {
+    "title": {
+      "edit": "Pflanze bearbeiten 🪴",
+      "add": "Neue Pflanze hinzufügen 🌱"
+    },
+    "picture": {
+      "addBtn": "Bild hinzufügen",
+      "hint": "Jetzt aufnehmen oder aus der Galerie importieren",
+      "change": "Bild ändern"
+    },
+    "form": {
+      "latin": {
+        "label": "Lateinischer Name",
+        "placeholder": "Gib den lateinischen Namen deiner Pflanze an"
+      },
+      "customName": {
+        "label": "Individueller Name (optional)",
+        "placeholder": "Gib deiner Pflanze einen Spitznamen"
+      },
+      "adoption": {
+        "label": "Adoption",
+        "placeholder": "Wann hast du sie bekommen?"
+      },
+      "careNotes": {
+        "label": "Pflegehinweise (optional)",
+        "placeholder": "Füge Pflegehinweise oder andere Notizen zu deiner Pflanze hinzu"
+      },
+      "memories": {
+        "label": "Erinnerungen",
+        "gallery": "Galerie",
+        "edit": "Bearbeiten",
+        "title": "Titel",
+        "photo": "Foto",
+        "change": "Ändern",
+        "add": "Erinnerungsfoto hinzufügen"
+      }
+    }
+  }
+}

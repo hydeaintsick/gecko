@@ -9,6 +9,7 @@ import Link from "next/link";
 import PlantForm from "@/components/plant-form";
 import { usePlantStore } from "@/lib/store";
 import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 export default function EditPlantPage() {
   const router = useRouter();
@@ -17,6 +18,7 @@ export default function EditPlantPage() {
   const { plants, updatePlant } = usePlantStore();
   const [plant, setPlant] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const t = useTranslations();
 
   useEffect(() => {
     const foundPlant = plants.find((p: any) => p.id === id);
@@ -58,7 +60,7 @@ export default function EditPlantPage() {
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold">Edit Plant 🪴</h1>
+          <h1 className="text-2xl font-bold">{t("plantPage.title.edit")}</h1>
         </header>
 
         <PlantForm

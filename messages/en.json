@@ -49,5 +49,43 @@
     "plant": "plant",
     "plants": "plants",
     "syncing": "Syncing..."
+  },
+  "plantPage": {
+    "title": {
+      "edit": "Edit Plant 🪴",
+      "add": "Add New Plant 🌱"
+    },
+    "picture": {
+      "addBtn": "Add picture",
+      "hint": "Take it now or import from gallery",
+      "change": "Change picture"
+    },
+    "form": {
+      "latin": {
+        "label": "Latin Name",
+        "placeholder": "Provide the latin name of your plant"
+      },
+      "customName": {
+        "label": "Custom Name (Optional)",
+        "placeholder": "Give your plant a nickname"
+      },
+      "adoption": {
+        "label": "Adoption",
+        "placeholder": "When have you got it?"
+      },
+      "careNotes": {
+        "label": "Care Notes (Optional)",
+        "placeholder": "Add care instructions or other notes abour your plant"
+      },
+      "memories": {
+        "label": "Memories",
+        "gallery": "Gallery",
+        "edit": "Edit",
+        "title": "Title",
+        "photo": "Photo",
+        "change": "Change",
+        "add": "Add memory photo"
+      }
+    }
   }
 }

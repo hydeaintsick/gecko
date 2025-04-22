@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import { useTranslations } from "next-intl";
 
 export type Memory = {
   id: string;
@@ -30,6 +31,7 @@ export function MemoriesGallery({
   const [isEditMode, setIsEditMode] = useState(false);
   const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null);
   const [isMemoryModalOpen, setIsMemoryModalOpen] = useState(false);
+  const t = useTranslations();
 
   const addMemory = () => {
     const newMemories = [
@@ -86,14 +88,14 @@ export function MemoriesGallery({
       <div className="flex items-center justify-between mb-2 h-[60px]">
         <div className="flex items-center gap-2">
           <Label htmlFor="edit-mode" className="text-sm">
-            Memories
+            {t("plantPage.form.memories.label")}
           </Label>
           <div className="flex items-center gap-2">
             <Label
               htmlFor="edit-mode"
               className="text-xs text-muted-foreground"
             >
-              Gallery
+              {t("plantPage.form.memories.gallery")}
             </Label>
             <Switch
               id="edit-mode"
@@ -104,7 +106,7 @@ export function MemoriesGallery({
               htmlFor="edit-mode"
               className="text-xs text-muted-foreground"
             >
-              Edit
+              {t("plantPage.form.memories.edit")}
             </Label>
           </div>
         </div>
@@ -118,7 +120,7 @@ export function MemoriesGallery({
             className="text-xs"
           >
             <Plus className="h-3.5 w-3.5 mr-1" />
-            Add Memory
+            {t("plantPage.form.memories.add")}
           </Button>
         )}
       </div>
@@ -149,7 +151,7 @@ export function MemoriesGallery({
                           htmlFor={`memory-title-${index}`}
                           className="text-sm"
                         >
-                          Title
+                          {t("plantPage.form.memories.title")}
                         </Label>
                         <Input
                           id={`memory-title-${index}`}
@@ -162,7 +164,9 @@ export function MemoriesGallery({
                         />
                       </div>
                       <div>
-                        <Label className="text-sm">Photo</Label>
+                        <Label className="text-sm">
+                          {t("plantPage.form.memories.photo")}
+                        </Label>
                         <div className="mt-1">
                           {memory.image ? (
                             <div className="relative w-full aspect-square rounded-lg overflow-hidden border border-input">
@@ -178,7 +182,7 @@ export function MemoriesGallery({
                                 className="absolute top-[42%] left-[10%] w-[80%] h-10"
                                 onClick={() => openDeviceLibrary(memory.id)}
                               >
-                                Change
+                                {t("plantPage.form.memories.change")}
                               </Button>
                             </div>
                           ) : (
@@ -188,7 +192,7 @@ export function MemoriesGallery({
                             >
                               <Camera className="h-6 w-6 text-muted-foreground mb-2" />
                               <p className="text-xs font-medium">
-                                Add memory photo
+                                {t("plantPage.form.memories.add")}
                               </p>
                             </div>
                           )}

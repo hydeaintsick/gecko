@@ -9,10 +9,12 @@ import Link from "next/link";
 import PlantForm from "@/components/plant-form";
 import { usePlantStore } from "@/lib/store";
 import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 export default function AddPlantPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const t = useTranslations();
 
   const { addPlant } = usePlantStore();
 
@@ -44,7 +46,7 @@ export default function AddPlantPage() {
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold">Add New Plant 🌱</h1>
+          <h1 className="text-2xl font-bold">{t("plantPage.title.add")}</h1>
         </header>
 
         <PlantForm onSubmit={handleSubmit} loading={loading} />

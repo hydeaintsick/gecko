@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
 import { MemoriesGallery } from "./memories-gallery";
+import { useTranslations } from "next-intl";
 
 const EMOJIS = ["🌱", "🌿", "🍃", "🌵", "🌼", "🌸", "🌺"];
 
@@ -50,6 +51,8 @@ export default function PlantForm({
   });
   const [previewImage, setPreviewImage] = useState(initialData?.image || null);
   const fileInputRef = useRef<any>(null);
+
+  const t = useTranslations();
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -110,9 +113,11 @@ export default function PlantForm({
                   <Camera className="h-8 w-8 text-muted-foreground mb-2" />
                 </div>
 
-                <p className="text-sm font-medium">Add picture</p>
+                <p className="text-sm font-medium">
+                  {t("plantPage.picture.addBtn")}
+                </p>
                 <p className="text-xs text-center text-muted-foreground mt-2">
-                  Take it now or import from gallery
+                  {t("plantPage.picture.hint")}
                 </p>
                 <input
                   ref={fileInputRef}
@@ -132,32 +137,34 @@ export default function PlantForm({
             className="mt-4"
             onClick={removeImage}
           >
-            Change picture
+            {t("plantPage.picture.change")}
           </Button>
         )}
       </div>
       <div className="space-y-4">
         <div>
-          <Label htmlFor="latinName">Latin Name</Label>
+          <Label htmlFor="latinName">{t("plantPage.form.latin.label")}</Label>
           <Input
             id="latinName"
             name="latinName"
             value={formData.latinName}
             onChange={handleChange}
-            placeholder="Provide the latin name of your plant"
+            placeholder={t("plantPage.form.latin.placeholder")}
             className="flex-1 mt-1.5"
           />
         </div>
 
         <div>
-          <Label htmlFor="customName">Custom Name (Optional)</Label>
+          <Label htmlFor="customName">
+            {t("plantPage.form.customName.label")}
+          </Label>
           <div className="flex items-center gap-2">
             <Input
               id="customName"
               name="customName"
               value={formData.customName}
               onChange={handleChange}
-              placeholder="Give your plant a nickname"
+              placeholder={t("plantPage.form.customName.placeholder")}
               className="flex-1 mt-1.5"
             />
             <Select
@@ -182,13 +189,15 @@ export default function PlantForm({
         </div>
 
         <div>
-          <Label htmlFor="customName">Adoption</Label>
+          <Label htmlFor="customName">
+            {t("plantPage.form.adoption.label")}
+          </Label>
           <Input
             id="birthDate"
             name="birthDate"
             value={formData.birthDate}
             onChange={handleChange}
-            placeholder="When have you got it?"
+            placeholder={t("plantPage.form.adoption.placeholder")}
             className="mt-1.5"
           />
         </div>
@@ -200,14 +209,14 @@ export default function PlantForm({
         />
 
         <div>
-          <Label htmlFor="notes">Care Notes (Optional)</Label>
+          <Label htmlFor="notes">{t("plantPage.form.careNotes.label")}</Label>
           <Textarea
             id="notes"
             name="notes"
             style={{ height: 500 }}
             value={formData.notes}
             onChange={handleChange}
-            placeholder="Add care instructions or other notes about your plant"
+            placeholder={t("plantPage.form.careNotes.placeholder")}
             className="mt-1.5 min-h-[100px]"
           />
         </div>
