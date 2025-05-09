@@ -67,6 +67,7 @@ export const usePlantStore = create<PlantStore>()(
             set({
               plants: res.data.map((p: any) => ({
                 id: p.id,
+                birthDate: p.birthDate,
                 latinName: p.latin,
                 customName: p.name,
                 image: p.preview,
